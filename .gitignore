@@ -1,0 +1,14 @@
+.DS_Store
+*.bz2
+*.tar.*
+*.zip
+objdir*
+toolsdir
+*-build
+autoconf-2.64/
+automake-1.11.1/
+avrdude-6.0.1
+libusb-1.0.18
+libusb-compat-0.1.5
+avr
+tmp
