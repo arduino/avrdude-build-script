@@ -41,12 +41,12 @@ fi
 
 if [ `uname -s` == "Linux" ] || [ `uname -s` == "Darwin" ]
 then
-	if [[ ! -f libusb-1.0.18.tar.bz2  ]] ;
+	if [[ ! -f libusb-1.0.20.tar.bz2  ]] ;
 	then
-		wget http://download.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.18/libusb-1.0.18.tar.bz2
+		wget http://download.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.20/libusb-1.0.20.tar.bz2
 	fi
 
-	tar xfv libusb-1.0.18.tar.bz2
+	tar xfv libusb-1.0.20.tar.bz2
 
 	mkdir -p libusb-1.0-build
 	cd libusb-1.0-build
@@ -57,7 +57,7 @@ then
 		--enable-static \
 		--enable-shared"
 
-	CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-1.0.18/configure $CONFARGS
+	CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-1.0.20/configure $CONFARGS
 
 	if [ -z "$MAKE_JOBS" ]; then
 		MAKE_JOBS="2"
