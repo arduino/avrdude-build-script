@@ -59,11 +59,7 @@ then
 
 	CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-1.0.20/configure $CONFARGS
 
-	if [ -z "$MAKE_JOBS" ]; then
-		MAKE_JOBS="2"
-	fi
-
-	nice -n 10 make -j $MAKE_JOBS
+	make -j 1
 
 	make install
 
@@ -86,11 +82,7 @@ then
 
 	PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-compat-0.1.5/configure $CONFARGS
 
-	if [ -z "$MAKE_JOBS" ]; then
-		MAKE_JOBS="2"
-	fi
-
-	nice -n 10 make -j $MAKE_JOBS
+	make -j 1
 
 	make install
 fi
