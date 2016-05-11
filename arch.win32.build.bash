@@ -16,6 +16,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 export PATH=$PATH:/c/MinGW/bin/:/c/cygwin/bin/
+export MAKE_JOBS=1
+
 CFLAGS="-DWIN32 -static" CXXFLAGS="-DWIN32 -static" LDFLAGS="-DWIN32 -static" CC="mingw32-gcc -m32" CXX="mingw32-g++ -m32" ./build.all.bash
 
 rm -f *arduino*.tar.bz2 *arduino*.zip
