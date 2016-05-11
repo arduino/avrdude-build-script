@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-export PATH=/opt/local/libexec/gnubin/:$PATH
+export PATH=/opt/local/libexec/gnubin/:/opt/local/bin:$PATH
 
 CC="gcc -arch i386 -mmacosx-version-min=10.5" CXX="g++ -arch i386 -mmacosx-version-min=10.5" ./build.all.bash
 
