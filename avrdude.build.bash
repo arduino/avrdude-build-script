@@ -28,7 +28,7 @@ for p in ../avrdude-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
 #then
 #	for p in ../avrdude-patches/*.patch.optional; do echo Applying $p; patch -p0 < $p; done
 #fi
-autoreconf
+autoreconf --force --install
 ./bootstrap
 cd -
 
