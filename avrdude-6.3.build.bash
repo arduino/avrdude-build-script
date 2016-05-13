@@ -23,7 +23,7 @@ fi
 tar xfv avrdude-6.3.tar.gz
 
 cd avrdude-6.3
-for p in ../avrdude-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
+for p in ../avrdude-6.3-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
 autoreconf --force --install
 ./bootstrap
 cd -
@@ -43,14 +43,14 @@ CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../avrdude-6.3/configure $CONFARGS
 make
 make install
+cd ..
 
 if [ `uname -s` == "Linux" ] || [ `uname -s` == "Darwin" ]
 then
-	cd ../objdir/bin/
-	mv avrdude avrdude_bin
-	cp ../../avrdude-files/avrdude .
+	mv objdir/bin/avrdude objdir/bin/avrdude_bin
+	cp avrdude-6.3-files/avrdude objdir/bin/
 	if [ `uname -s` == "Darwin" ]
 	then
-		sed -i '' 's/LD_LIBRARY_PATH/DYLD_LIBRARY_PATH/g' avrdude
+		sed -i '' 's/LD_LIBRARY_PATH/DYLD_LIBRARY_PATH/g' objdir/bin/avrdude
 	fi
 fi

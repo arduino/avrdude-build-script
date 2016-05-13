@@ -20,7 +20,5 @@ rm -rf objdir
 mkdir objdir
 
 ./libusb.build.bash
-./avrdude.build.bash
+./avrdude-6.3.build.bash
 
-rm -rf avrdude-6.3
-mv objdir avrdude-6.3
