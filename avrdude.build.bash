@@ -24,10 +24,6 @@ tar xfv avrdude-6.3.tar.gz
 
 cd avrdude-6.3
 for p in ../avrdude-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
-#if [[ `uname -s` != CYGWIN* && `uname -s` != MINGW* ]]
-#then
-#	for p in ../avrdude-patches/*.patch.optional; do echo Applying $p; patch -p0 < $p; done
-#fi
 autoreconf --force --install
 ./bootstrap
 cd -
