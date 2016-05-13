@@ -1,10 +1,10 @@
 #!/bin/bash
 
-OS=`uname -o || uname`
+export OS=`uname -o || uname`
 
 if [[ $OS == "GNU/Linux" ]] ;
 then
-  MACHINE=`uname -m`
+  export MACHINE=`uname -m`
   if [[ $MACHINE == "x86_64" ]] ; then
     ./arch.linux64.build.bash
     exit 0

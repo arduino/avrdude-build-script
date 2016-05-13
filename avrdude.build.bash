@@ -33,64 +33,15 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ `uname -s` == CYGWIN* || `uname -s` == MINGW* ]]
-then
-	cd tmp/libusb-win32-bin*
-	LIBUSB_DIR=`pwd`
-	cd ../..
-
-	CFLAGS="$CFLAGS -I$LIBUSB_DIR/include -L$LIBUSB_DIR/lib/gcc"
-	CXXFLAGS="$CXXFLAGS -I$LIBUSB_DIR/include -L$LIBUSB_DIR/lib/gcc"
-	LDFLAGS="$LDFLAGS -I$LIBUSB_DIR/include -L$LIBUSB_DIR/lib/gcc"
-fi
-
-if [ `uname -s` == "Linux" ] || [ `uname -s` == "Darwin" ]
-then
-	CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
-	CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
-	LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/include -L$PREFIX/lib"
-fi
+CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
+CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
+LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/include -L$PREFIX/lib"
 
 mkdir -p avrdude-build
 cd avrdude-build
-
-CONFARGS=" \
-	--prefix=$PREFIX \
-	--enable-linuxgpio"
-
-if [[ `uname -s` != CYGWIN* && `uname -s` != MINGW* ]]
-then
-	CONFARGS="$CONFARGS \
-		--enable-arduinotre"
-fi
-
-CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../avrdude-6.3/configure $CONFARGS > avrdude.configure.output
-
-cat avrdude.configure.output
-DOESNTHAVELIBUSB="DON'T HAVE libusb"
-DOESNTHAVELIBUSB1="DON'T HAVE libusb_1_0"
-CHECKLIBUSB=`grep "DON'T HAVE libusb" avrdude.configure.output || echo`
-CHECKLIBUSB1=`grep "DON'T HAVE libusb_1_0" avrdude.configure.output || echo`
-rm avrdude.configure.output
-
-if [[ `uname -s` == CYGWIN* || `uname -s` == MINGW* ]]; then
-	if [[ "$CHECKLIBUSB" == "$DOESNTHAVELIBUSB" && "$CHECKLIBUSB1" == "$DOESNTHAVELIBUSB1" ]]; then
-		echo "avrdude missing libusb support"
-		exit 1
-	fi
-else
-	if [[ "$CHECKLIBUSB" == "$DOESNTHAVELIBUSB" || "$CHECKLIBUSB1" == "$DOESNTHAVELIBUSB1" ]]; then
-		echo "avrdude missing libusb support"
-		exit 1
-	fi
-fi
-
-if [ -z "$MAKE_JOBS" ]; then
-	MAKE_JOBS="2"
-fi
-
-nice -n 10 make -j $MAKE_JOBS
-
+CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
+CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../avrdude-6.3/configure $CONFARGS
+make
 make install
 
 if [ `uname -s` == "Linux" ] || [ `uname -s` == "Darwin" ]
