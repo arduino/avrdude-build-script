@@ -18,32 +18,19 @@ if [[ $OS == "GNU/Linux" ]] ; then
     exit 1
   fi
 
-  ./build.all.bash
-  mv objdir avrdude
-  rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
-  tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
-  exit 0
-
 elif [[ $OS == "Msys" || $OS == "Cygwin" ]] ; then
 
   export PATH=$PATH:/c/MinGW/bin/:/c/cygwin/bin/
-
-  CC="mingw32-gcc -m32" CXX="mingw32-g++ -m32" ./build.all.bash
-  rm -f *arduino*.tar.bz2 *arduino*.zip
-  mv objdir avrdude
-  zip -r -9 ./avrdude-${OUTPUT_VERSION}-i686-mingw32.zip avrdude
-  exit 0
+  export CC="mingw32-gcc -m32"
+  export CXX="mingw32-g++ -m32"
+  OUTPUT_TAG=i686-mingw32
 
 elif [[ $OS == "Darwin" ]] ; then
 
   export PATH=/opt/local/libexec/gnubin/:/opt/local/bin:$PATH
+  export CC="gcc -arch i386 -mmacosx-version-min=10.5"
+  export CXX="g++ -arch i386 -mmacosx-version-min=10.5"
   OUTPUT_TAG=i386-apple-darwin11
-
-  CC="gcc -arch i386 -mmacosx-version-min=10.5" CXX="g++ -arch i386 -mmacosx-version-min=10.5" ./build.all.bash
-  mv objdir avrdude
-  rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
-  tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
-  exit 0
 
 else
 
@@ -51,4 +38,14 @@ else
   exit 2
 
 fi
+
+rm -rf avrdude avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 objdir
+
+./libusb-1.0.20.build.bash
+./libusb-compat-0.1.5.build.bash
+./avrdude-6.3.build.bash
+
+mv objdir avrdude
+rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
+tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
 
