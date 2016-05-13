@@ -26,17 +26,16 @@ then
 fi
 
 tar xfv libusb-compat-0.1.5.tar.bz2
+
 cd libusb-compat-0.1.5
 if [[ $OS == "Msys" || $OS == "Cygwin" ]] ; then
   patch -p1 < ../libusb-compat-0.1.5-patches/01-mingw-build.patch
   autoreconf --force --install
 fi
-cd -
 
-mkdir -p libusb-compat-0.1.5-build
-cd libusb-compat-0.1.5-build
 CONFARGS="--prefix=$PREFIX --enable-static --enable-shared"
-PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-compat-0.1.5/configure $CONFARGS
+PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 make -j 1
 make install
+cd ..
 

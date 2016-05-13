@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-rm -rf avrdude avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 *-build
+rm -rf avrdude avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5
 
 rm -rf objdir/{info,man,share}
 

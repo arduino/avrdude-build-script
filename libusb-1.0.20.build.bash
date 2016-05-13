@@ -27,10 +27,9 @@ fi
 
 tar xfv libusb-1.0.20.tar.bz2
 
-mkdir -p libusb-1.0.20-build
-cd libusb-1.0.20-build
+cd libusb-1.0.20
 CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --enable-shared"
-CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-1.0.20/configure $CONFARGS
+CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 make -j 1
 make install
 cd ..

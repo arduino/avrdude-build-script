@@ -15,6 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+mkdir -p objdir
+cd objdir
+PREFIX=`pwd`
+cd -
+
 if [[ ! -f avrdude-6.3.tar.gz  ]] ;
 then
 	wget http://download.savannah.gnu.org/releases/avrdude/avrdude-6.3.tar.gz
@@ -26,21 +31,13 @@ cd avrdude-6.3
 for p in ../avrdude-6.3-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
 autoreconf --force --install
 ./bootstrap
-cd -
-
-mkdir -p objdir
-cd objdir
-PREFIX=`pwd`
-cd -
 
 CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
 CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
 LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/include -L$PREFIX/lib"
-
-mkdir -p avrdude-build
-cd avrdude-build
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
-CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../avrdude-6.3/configure $CONFARGS
+CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
+
 make
 make install
 cd ..
