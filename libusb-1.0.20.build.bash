@@ -15,11 +15,23 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-./clean.bash
-rm -rf objdir
-mkdir objdir
+mkdir -p objdir
+cd objdir
+PREFIX=`pwd`
+cd -
 
-./libusb-1.0.20.build.bash
-./libusb-compat-0.1.5.build.bash
-./avrdude-6.3.build.bash
+if [[ ! -f libusb-1.0.20.tar.bz2  ]] ;
+then
+	wget http://download.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.20/libusb-1.0.20.tar.bz2
+fi
+
+tar xfv libusb-1.0.20.tar.bz2
+
+mkdir -p libusb-1.0.20-build
+cd libusb-1.0.20-build
+CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --enable-shared"
+CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-1.0.20/configure $CONFARGS
+make -j 1
+make install
+cd ..
 

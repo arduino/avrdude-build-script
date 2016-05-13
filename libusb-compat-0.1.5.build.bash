@@ -20,21 +20,6 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ ! -f libusb-1.0.20.tar.bz2  ]] ;
-then
-	wget http://download.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.20/libusb-1.0.20.tar.bz2
-fi
-
-tar xfv libusb-1.0.20.tar.bz2
-
-mkdir -p libusb-1.0-build
-cd libusb-1.0-build
-CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --enable-shared"
-CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-1.0.20/configure $CONFARGS
-make -j 1
-make install
-cd ..
-
 if [[ ! -f libusb-compat-0.1.5.tar.bz2  ]] ;
 then
 	wget http://download.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2
@@ -48,8 +33,8 @@ if [[ $OS == "Msys" || $OS == "Cygwin" ]] ; then
 fi
 cd -
 
-mkdir -p libusb-0.1-build
-cd libusb-0.1-build
+mkdir -p libusb-compat-0.1.5-build
+cd libusb-compat-0.1.5-build
 CONFARGS="--prefix=$PREFIX --enable-static --enable-shared"
 PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ../libusb-compat-0.1.5/configure $CONFARGS
 make -j 1
