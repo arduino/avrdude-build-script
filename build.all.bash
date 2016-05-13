@@ -15,19 +15,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-rm -rf avrdude-6.3
-
 ./clean.bash
-
-rm -rf objdir*
-
+rm -rf objdir
 mkdir objdir
 
-./clean.bash
 ./libusb.build.bash
-./clean.bash
 ./avrdude.build.bash
-./clean.bash
 
+rm -rf avrdude-6.3
 mv objdir avrdude-6.3
-
