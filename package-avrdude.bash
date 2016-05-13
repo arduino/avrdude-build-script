@@ -39,13 +39,12 @@ else
 
 fi
 
-rm -rf avrdude avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 objdir
+rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 objdir
 
 ./libusb-1.0.20.build.bash
 ./libusb-compat-0.1.5.build.bash
 ./avrdude-6.3.build.bash
 
-mv objdir avrdude
 rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
-tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
+tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 --transform 's,^objdir,avrdude,' objdir
 
