@@ -29,6 +29,9 @@ tar xfv libusb-1.0.20.tar.bz2
 
 cd libusb-1.0.20
 CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --enable-shared"
+if [[ $CROSS_COMPILE != "" ]] ; then
+  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+fi
 CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 make -j 1
 make install

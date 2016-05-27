@@ -18,8 +18,17 @@
 OUTPUT_VERSION=6.3-arduino
 
 export OS=`uname -o || uname`
+export TARGET_OS=$OS
 
-if [[ $OS == "GNU/Linux" ]] ; then
+if [[ $CROSS_COMPILE == "mingw" ]] ; then
+
+  export CC="i686-w64-mingw32-gcc"
+  export CXX="i686-w64-mingw32-g++"
+  export CROSS_COMPILE_HOST="i686-w64-mingw32"
+  export TARGET_OS="Windows"
+  OUTPUT_TAG=i686-w64-mingw32
+
+elif [[ $OS == "GNU/Linux" ]] ; then
 
   export MACHINE=`uname -m`
   if [[ $MACHINE == "x86_64" ]] ; then

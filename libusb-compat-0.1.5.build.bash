@@ -28,12 +28,15 @@ fi
 tar xfv libusb-compat-0.1.5.tar.bz2
 
 cd libusb-compat-0.1.5
-if [[ $OS == "Msys" || $OS == "Cygwin" ]] ; then
+if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" ]] ; then
   patch -p1 < ../libusb-compat-0.1.5-patches/01-mingw-build.patch
   autoreconf --force --install
 fi
 
 CONFARGS="--prefix=$PREFIX --enable-static --enable-shared"
+if [[ $CROSS_COMPILE != "" ]] ; then
+  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+fi
 PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig" CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 make -j 1
 make install

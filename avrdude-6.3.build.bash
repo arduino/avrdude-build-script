@@ -36,18 +36,22 @@ CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
 CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
 LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/include -L$PREFIX/lib"
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
+if [[ $CROSS_COMPILE != "" ]] ; then
+  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+fi
 CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 
 make
 make install
 cd ..
 
-if [ `uname -s` == "Linux" ] || [ `uname -s` == "Darwin" ]
+if [[ $TARGET_OS == "GNU/Linux" || $TARGET_OS == "Darwin" ]]
 then
 	mv objdir/bin/avrdude objdir/bin/avrdude_bin
 	cp avrdude-6.3-files/avrdude objdir/bin/
-	if [ `uname -s` == "Darwin" ]
+	if [[ $TARGET_OS == "Darwin" ]]
 	then
 		sed -i '' 's/LD_LIBRARY_PATH/DYLD_LIBRARY_PATH/g' objdir/bin/avrdude
 	fi
 fi
+
