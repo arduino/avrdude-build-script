@@ -7,8 +7,8 @@ toolsdir
 *-build
 autoconf-2.64/
 automake-1.11.1/
-avrdude-6.0.1
-libusb-1.0.18
+avrdude-6.3
+libusb-1.0.20
 libusb-compat-0.1.5
 libelf-0.8.13
 avr
