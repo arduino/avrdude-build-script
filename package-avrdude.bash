@@ -63,10 +63,11 @@ else
 
 fi
 
-rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 objdir
+rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libelf-0.8.13 objdir
 
 ./libusb-1.0.20.build.bash
 ./libusb-compat-0.1.5.build.bash
+./libelf-0.8.13.build.bash
 ./avrdude-6.3.build.bash
 
 rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
