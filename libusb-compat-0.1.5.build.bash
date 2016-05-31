@@ -20,9 +20,21 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ ! -f libusb-compat-0.1.5.tar.bz2  ]] ;
-then
-	wget http://download.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2
+if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" ]] ; then
+  # libusb-compat is a mess to compile for win32
+  # use a precompiled version from libusb-win32 project
+  if [[ ! -f libusb-win32-bin-1.2.6.0.zip ]] ; then
+    wget http://download.sourceforge.net/project/libusb-win32/libusb-win32-releases/1.2.6.0/libusb-win32-bin-1.2.6.0.zip
+  fi
+  unzip libusb-win32-bin-1.2.6.0.zip
+  cp libusb-win32-bin-1.2.6.0/bin/x86/libusb0_x86.dll $PREFIX/bin/libusb0.dll
+  cp libusb-win32-bin-1.2.6.0/include/lusb0_usb.h $PREFIX/include
+  cp libusb-win32-bin-1.2.6.0/lib/gcc/libusb.a $PREFIX/lib
+  exit 0
+fi
+
+if [[ ! -f libusb-compat-0.1.5.tar.bz2 ]] ; then
+  wget http://download.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2
 fi
 
 tar xfv libusb-compat-0.1.5.tar.bz2
