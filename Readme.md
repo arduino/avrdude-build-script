@@ -21,7 +21,7 @@ If you find any package missing from the following list, please open an issue at
 #### Debian requirements
 
 ```bash
-sudo apt-get install build-essential gperf bison subversion texinfo zip automake flex libusb-dev libusb-1.0-0-dev libtinfo-dev pkg-config
+sudo apt-get install build-essential bison subversion zip automake flex pkg-config
 ```
 
 #### Mac OSX requirements
@@ -64,7 +64,6 @@ You need to install Cygwin: http://www.cygwin.com/. Once you have run `setup-x86
 - wget
 - unzip
 - zip
-- gperf
 - bison
 - flex
 - make
@@ -72,7 +71,6 @@ You need to install Cygwin: http://www.cygwin.com/. Once you have run `setup-x86
 - automake
 - autoconf
 - gcc-g++
-- libncurses-devel
 
 You also need to install MinGW: http://www.mingw.org/. Once you have run mingw-get-setup.exe, select and install (clicking on "Installation" -> "Apply changes") the following packages:
 
