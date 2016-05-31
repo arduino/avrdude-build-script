@@ -9,7 +9,14 @@ Therefore, the resulting binaries may differ significantly from upstream, you sh
 
 ### Building
 
-Setup has been done on partially set up development machines. If, trying to compile on your machine, you find any package missing from the following list, please open an issue at once! We all can't afford wasting time on setup :)
+Just run:
+
+```
+./package-avrdude.bash
+```
+
+Setup has been done on partially set up development machines.
+If you find any package missing from the following list, please open an issue at once!
 
 #### Debian requirements
 
@@ -31,7 +38,25 @@ sudo port install gpatch +universal
 sudo port install libusb +universal
 ```
 
+#### Windows cross-compile from Linux requirements
+
+```bash
+sudo apt-get install gcc-mingw-w64-i686
+```
+
+When building you must set the env var `CROSS_COMPILE` to `mingw` for example:
+
+```
+CROSS_COMPILE=mingw ./package_avrdude.bash
+```
+
+cross compile with mingw has been tested on Ubuntu 14.04 (mingw-w64 4.8), different versions of mingw may behave differently and fail to build.
+
 #### Windows requirements
+
+**WARNING: the script for native Cygwin or Mingw builds has been started and abandoned in favor of cross
+compile with mingw (see section above). Please consider this part of the build script as a best effort
+bonus (it may work as it may, very probably, not work).**
 
 You need to install Cygwin: http://www.cygwin.com/. Once you have run `setup-x86.exe`, use the `Search` text field to filter and select for installation the following packages:
 

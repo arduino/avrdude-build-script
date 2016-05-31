@@ -44,6 +44,11 @@ elif [[ $OS == "GNU/Linux" ]] ; then
 
 elif [[ $OS == "Msys" || $OS == "Cygwin" ]] ; then
 
+  echo *************************************************************
+  echo WARNING: Build on native Cygwin or Msys has been discontinued
+  echo you may experience build failure or weird behaviour
+  echo *************************************************************
+
   export PATH=$PATH:/c/MinGW/bin/:/c/cygwin/bin/
   export CC="mingw32-gcc -m32"
   export CXX="mingw32-g++ -m32"
