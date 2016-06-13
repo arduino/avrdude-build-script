@@ -1,0 +1,30 @@
+--- configure.ac
++++ configure.ac
+@@ -81,7 +81,7 @@ AC_CHECK_LIB([ncurses], [tputs])
+ AC_CHECK_LIB([readline], [readline])
+ AH_TEMPLATE([HAVE_LIBELF],
+             [Define if ELF support is enabled via libelf])
+-AC_CHECK_LIB([elf], [elf_getshdrstrndx], [have_libelf=yes])
++AC_CHECK_HEADERS([libelf.h libelf/libelf.h], [have_libelf=yes])
+ if test x$have_libelf = xyes; then
+    case $target in
+        *)
+@@ -97,7 +97,7 @@ AC_SEARCH_LIBS([gethostent], [nsl])
+ AC_SEARCH_LIBS([setsockopt], [socket])
+ AH_TEMPLATE([HAVE_LIBUSB],
+             [Define if USB support is enabled via libusb])
+-AC_CHECK_LIB([usb], [usb_get_string_simple], [have_libusb=yes])
++AC_CHECK_HEADERS([lusb0_usb.h usb.h], [have_libusb=yes])
+ if test x$have_libusb = xyes; then
+    case $target in
+        *-*-darwin*)
+@@ -115,7 +115,7 @@ AC_SUBST(LIBUSB, $LIBUSB)
+ 
+ AH_TEMPLATE([HAVE_LIBUSB_1_0],
+             [Define if USB support is enabled via libusb 1.0])
+-AC_CHECK_LIB([usb-1.0], [libusb_init], [have_libusb_1_0=yes])
++AC_CHECK_HEADERS([libusb-1.0/libusb.h libusb.h], [have_libusb_1_0=yes])
+ if test x$have_libusb_1_0 = xyes; then
+    case $target in
+        *-*-darwin*)
+
