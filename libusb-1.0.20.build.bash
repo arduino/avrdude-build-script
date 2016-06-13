@@ -28,7 +28,7 @@ fi
 tar xfv libusb-1.0.20.tar.bz2
 
 cd libusb-1.0.20
-CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --enable-shared"
+CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi

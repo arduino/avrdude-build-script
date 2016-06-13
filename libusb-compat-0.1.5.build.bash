@@ -45,7 +45,7 @@ if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw
   autoreconf --force --install
 fi
 
-CONFARGS="--prefix=$PREFIX --enable-static --enable-shared"
+CONFARGS="--prefix=$PREFIX --enable-static --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi

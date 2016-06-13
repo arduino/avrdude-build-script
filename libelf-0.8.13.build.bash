@@ -28,7 +28,7 @@ fi
 tar xfv libelf-0.8.13.tar.gz
 
 cd libelf-0.8.13
-CONFARGS="--prefix=$PREFIX"
+CONFARGS="--prefix=$PREFIX --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi
