@@ -45,13 +45,3 @@ make
 make install
 cd ..
 
-if [[ $TARGET_OS == "GNU/Linux" || $TARGET_OS == "Darwin" ]]
-then
-	mv objdir/bin/avrdude objdir/bin/avrdude_bin
-	cp avrdude-6.3-files/avrdude objdir/bin/
-	if [[ $TARGET_OS == "Darwin" ]]
-	then
-		sed -i '' 's/LD_LIBRARY_PATH/DYLD_LIBRARY_PATH/g' objdir/bin/avrdude
-	fi
-fi
-
