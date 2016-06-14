@@ -76,16 +76,6 @@ rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 li
 ./libelf-0.8.13.build.bash
 ./avrdude-6.3.build.bash
 
-if [[ $CROSS_COMPILE_HOST == "i686-w64-mingw32" ]] ; then
-  # copy dependency libgcc_s_sjlj-1.dll into bin/ folder
-
-  # try to detect the location of libgcc_s_sjlj-1.dll
-  # (maybe there is better way... feel free to submit a patch!)
-  LTO_PATH=`i686-w64-mingw32-gcc -v 2>&1 | grep LTO | tr '=' ' ' | awk "{ print \\\$2;  }"`
-  DLL_PATH=`dirname $LTO_PATH`/libgcc_s_sjlj-1.dll
-  cp $DLL_PATH objdir/bin
-fi
-
 rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
 cp -a objdir avrdude
 tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
