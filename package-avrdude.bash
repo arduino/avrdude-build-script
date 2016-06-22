@@ -76,8 +76,21 @@ rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 li
 ./libelf-0.8.13.build.bash
 ./avrdude-6.3.build.bash
 
-rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
-cp -a objdir avrdude
-tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
-rm -r avrdude
+# if producing a windows build, compress as zip and
+# copy *toolchain-precompiled* content to any folder containing a .exe
+if [[ ${OUTPUT_TAG} == *"mingw"* ]] ; then
+
+  rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip
+  cp -a objdir avrdude
+  zip -r avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude
+  rm -r avrdude
+
+else
+
+  rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
+  cp -a objdir avrdude
+  tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
+  rm -r avrdude
+
+fi
 
