@@ -1,6 +1,6 @@
 --- avr.c
 +++ avr.c
-@@ -1058,6 +1058,36 @@ int avr_signature(PROGRAMMER * pgm, AVRPART * p)
+@@ -1058,6 +1058,39 @@
    return 0;
  }
  
@@ -31,57 +31,94 @@
 +}
 +
 +int compare_memory_masked(AVRMEM * m, unsigned char buf1, unsigned char buf2) {
-+  uint8_t bitmask = get_fuse_bitmask(m);
++  uint8_t bitmask = 0xFF;
++  if(m) {
++    bitmask = get_fuse_bitmask(m);
++  }
 +  return ((buf1 & bitmask) != (buf2 & bitmask));
 +}
  
  /*
   * Verify the memory buffer of p with that of v.  The byte range of v,
-@@ -1103,7 +1133,7 @@ int avr_verify(AVRPART * p, AVRPART * v, char * memtype, int size)
- 
+@@ -1104,11 +1137,18 @@
    for (i=0; i<size; i++) {
      if ((b->tags[i] & TAG_ALLOCATED) != 0 &&
--        buf1[i] != buf2[i]) {
-+        compare_memory_masked(a , buf1[i], buf2[i])) {
-       avrdude_message(MSG_INFO, "%s: verification error, first mismatch at byte 0x%04x\n"
-                       "%s0x%02x != 0x%02x\n",
-                       progname, i,
+         buf1[i] != buf2[i]) {
+-      avrdude_message(MSG_INFO, "%s: verification error, first mismatch at byte 0x%04x\n"
+-                      "%s0x%02x != 0x%02x\n",
+-                      progname, i,
+-                      progbuf, buf1[i], buf2[i]);
+-      return -1;
++      if(compare_memory_masked(a , buf1[i], buf2[i])) {
++        avrdude_message(MSG_INFO, "%s: verification error, first mismatch at byte 0x%04x\n"
++                        "%s0x%02x != 0x%02x\n",
++                        progname, i,
++                        progbuf, buf1[i], buf2[i]);
++        return -1;
++      } else {
++        avrdude_message(MSG_INFO, "%s: WARNING: invalid value for unused bits in fuse \"%s\", should be set to 1 according to datasheet\n"
++                        "This behaviour is deprecated and will result in an error in future version\n"
++                        "You probably want to use 0x%02x instead of 0x%02x (double check with your datasheet first).\n",
++                        progname, memtype, buf1[i], buf2[i]);
++      }
+     }
+   }
+ 
 --- libavrdude.h
 +++ libavrdude.h
-@@ -337,6 +337,9 @@ typedef void (*walk_avrparts_cb)(const char *name, const char *desc,
+@@ -337,6 +337,10 @@
                                   void *cookie);
  void walk_avrparts(LISTID avrparts, walk_avrparts_cb cb, void *cookie);
  void sort_avrparts(LISTID avrparts);
 +
 +uint8_t get_fuse_bitmask(AVRMEM * m);
++int compare_memory_masked(AVRMEM * m, unsigned char buf1, unsigned char buf2);
 +
  #ifdef __cplusplus
  }
  #endif
 --- main.c
 +++ main.c
-@@ -1239,6 +1239,7 @@ int main(int argc, char * argv [])
-     unsigned char safemodeafter_lfuse = 0xff;
-     unsigned char safemodeafter_hfuse = 0xff;
-     unsigned char safemodeafter_efuse = 0xff;
-+    unsigned char safemodeafter_efuse_mask = 0xff;
-     unsigned char safemodeafter_fuse  = 0xff;
-     unsigned char failures = 0;
-     char yes[1] = {'y'};
-@@ -1345,8 +1346,15 @@ int main(int argc, char * argv [])
+@@ -1264,8 +1264,11 @@
        }
      }
- 
-+    /* Get efuse bitmask if it exists */
+     
 +    AVRMEM * m;
-+    m = avr_locate_mem(p, "efuse");
-+    if (m != NULL) {
-+      safemodeafter_efuse_mask = get_fuse_bitmask(m);
-+    }
-+
++    
+     /* Now check what fuses are against what they should be */
+-    if (safemodeafter_fuse != safemode_fuse) {
++    m = avr_locate_mem(p, "fuse");
++    if (compare_memory_masked(m, safemodeafter_fuse, safemode_fuse)) {
+       fuses_updated = 1;
+       avrdude_message(MSG_INFO, "%s: safemode: fuse changed! Was %x, and is now %x\n",
+               progname, safemode_fuse, safemodeafter_fuse);
+@@ -1293,7 +1296,8 @@
+     }
+ 
+     /* Now check what fuses are against what they should be */
+-    if (safemodeafter_lfuse != safemode_lfuse) {
++    m = avr_locate_mem(p, "lfuse");
++    if (compare_memory_masked(m, safemodeafter_lfuse, safemode_lfuse)) {
+       fuses_updated = 1;
+       avrdude_message(MSG_INFO, "%s: safemode: lfuse changed! Was %x, and is now %x\n",
+               progname, safemode_lfuse, safemodeafter_lfuse);
+@@ -1321,7 +1325,8 @@
+     }
+ 
+     /* Now check what fuses are against what they should be */
+-    if (safemodeafter_hfuse != safemode_hfuse) {
++    m = avr_locate_mem(p, "hfuse");
++    if (compare_memory_masked(m, safemodeafter_hfuse, safemode_hfuse)) {
+       fuses_updated = 1;
+       avrdude_message(MSG_INFO, "%s: safemode: hfuse changed! Was %x, and is now %x\n",
+               progname, safemode_hfuse, safemodeafter_hfuse);
+@@ -1346,7 +1351,8 @@
+     }
+ 
      /* Now check what fuses are against what they should be */
 -    if (safemodeafter_efuse != safemode_efuse) {
-+    if ((safemodeafter_efuse & safemodeafter_efuse_mask) != (safemode_efuse & safemodeafter_efuse_mask)) {
++    m = avr_locate_mem(p, "efuse");
++    if (compare_memory_masked(m, safemodeafter_efuse, safemode_efuse)) {
        fuses_updated = 1;
        avrdude_message(MSG_INFO, "%s: safemode: efuse changed! Was %x, and is now %x\n",
                progname, safemode_efuse, safemodeafter_efuse);
