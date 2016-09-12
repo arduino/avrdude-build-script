@@ -31,6 +31,10 @@ cd libelf-0.8.13
 CONFARGS="--prefix=$PREFIX --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+  # solve bug with --host not being effective on second level directory
+  export CC=$CROSS_COMPILE_HOST-gcc
+  export AR=$CROSS_COMPILE_HOST-ar
+  export RANLIB=$CROSS_COMPILE_HOST-ranlib
 fi
 CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 make -j 1
