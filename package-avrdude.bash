@@ -80,6 +80,7 @@ rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 li
 # copy *toolchain-precompiled* content to any folder containing a .exe
 if [[ ${OUTPUT_TAG} == *"mingw"* ]] ; then
 
+  cp libusb-win32-bin-1.2.6.0/bin/x86/libusb0_x86.dll objdir/bin/libusb0.dll
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip
   cp -a objdir avrdude
   zip -r avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude
