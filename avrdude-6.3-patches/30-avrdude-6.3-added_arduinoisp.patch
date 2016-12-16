@@ -5,7 +5,7 @@
  
  programmer
 +  id    = "arduinoisp";
-+  desc  = " ";
++  desc  = "Arduino ISP Programmer";
 +  type  = "usbtiny";
 +  connection_type = usb;
 +  usbvid     = 0x2341;
