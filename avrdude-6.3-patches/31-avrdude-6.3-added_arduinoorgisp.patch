@@ -1,0 +1,18 @@
+--- avrdude.conf.in.orig	2016-12-16 13:02:11.218301337 +0100
++++ avrdude.conf.in	2016-12-16 13:02:13.446302698 +0100
+@@ -884,6 +884,15 @@
+ ;
+ 
+ programmer
++  id    = "arduinoisporg";
++  desc  = "Arduino ISP Programmer";
++  type  = "usbtiny";
++  connection_type = usb;
++  usbvid     = 0x2A03;
++  usbpid     = 0x0049;
++;
++
++programmer
+   id    = "butterfly";
+   desc  = "Atmel Butterfly Development Board";
+   type  = "butterfly";
