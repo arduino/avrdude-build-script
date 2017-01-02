@@ -20,6 +20,11 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
+if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" ]] ; then
+	#Avoid compiling ncurses in Windows platform
+	exit 0
+fi
+
 if [[ ! -f ncurses-6.0.tar.gz  ]] ;
 then
 	wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.0.tar.gz
@@ -29,13 +34,6 @@ tar xfv ncurses-6.0.tar.gz
 
 cd ncurses-6.0
 CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --enable-widec --with-cxx-binding"
-if [[ $CROSS_COMPILE != "" ]] ; then
-  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
-  # solve bug with --host not being effective on second level directory
-  export CC=$CROSS_COMPILE_HOST-gcc
-  export AR=$CROSS_COMPILE_HOST-ar
-  export RANLIB=$CROSS_COMPILE_HOST-ranlib
-fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
 make install
@@ -50,13 +48,6 @@ tar xfv readline-7.0.tar.gz
 
 cd readline-7.0
 CONFARGS="--prefix=$PREFIX --disable-shared"
-if [[ $CROSS_COMPILE != "" ]] ; then
-  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
-  # solve bug with --host not being effective on second level directory
-  export CC=$CROSS_COMPILE_HOST-gcc
-  export AR=$CROSS_COMPILE_HOST-ar
-  export RANLIB=$CROSS_COMPILE_HOST-ranlib
-fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
 make install
