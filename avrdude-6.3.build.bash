@@ -32,9 +32,9 @@ for p in ../avrdude-6.3-patches/*.patch; do echo Applying $p; patch -p0 < $p; do
 autoreconf --force --install
 ./bootstrap
 
-CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
-CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
-LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/include -L$PREFIX/lib"
+CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
+CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
+LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
