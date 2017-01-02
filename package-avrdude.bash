@@ -74,6 +74,7 @@ rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 li
 ./libusb-1.0.20.build.bash
 ./libusb-compat-0.1.5.build.bash
 ./libelf-0.8.13.build.bash
+./libncurses-6.0.build.bash
 ./avrdude-6.3.build.bash
 
 # if producing a windows build, compress as zip and
