@@ -26,9 +26,9 @@ cd avrdude-6.3
 autoreconf --force --install
 ./bootstrap
 
-CFLAGS="$CFLAGS -I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
-CXXFLAGS="$CXXFLAGS -I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
-LDFLAGS="$LDFLAGS -I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib"
+CFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib $CFLAGS"
+CXXFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib $CXXFLAGS"
+LDFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -L$PREFIX/lib $LDFLAGS"
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"

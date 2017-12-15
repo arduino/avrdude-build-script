@@ -36,7 +36,7 @@ cd ncurses-6.0
 CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --enable-widec --with-cxx-binding"
 CFLAGS="-w -O2 $CFLAGS -fPIC" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
-make install
+make install.libs
 cd ..
 
 if [[ ! -f readline-7.0.tar.gz  ]] ;
@@ -50,6 +50,6 @@ cd readline-7.0
 CONFARGS="--prefix=$PREFIX --disable-shared"
 CFLAGS="-w -O2 $CFLAGS -fPIC" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
-make install
+make install-static
 cd ..
 

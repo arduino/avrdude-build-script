@@ -69,7 +69,7 @@ else
 
 fi
 
-rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 libelf-0.8.13 objdir
+rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 libelf-0.8.13 objdir ncurses-6.0 readline-7.0
 
 ./libusb-1.0.20.build.bash
 ./libusb-compat-0.1.5.build.bash
