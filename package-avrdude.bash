@@ -28,6 +28,13 @@ if [[ $CROSS_COMPILE == "mingw" ]] ; then
   export TARGET_OS="Windows"
   OUTPUT_TAG=i686-w64-mingw32
 
+elif [[ $CROSS_COMPILE == "arm-cross" ]] ; then
+  export CC="arm-linux-gnueabihf-gcc"
+  export CXX="arm-linux-gnueabihf-g++"
+  export CROSS_COMPILE_HOST="arm-linux-gnueabihf"
+  export TARGET_OS="GNU/Linux"
+  OUTPUT_TAG=armhf-pc-linux-gnu
+
 elif [[ $OS == "GNU/Linux" ]] ; then
 
   export MACHINE=`uname -m`
