@@ -34,6 +34,9 @@ tar xfv ncurses-6.0.tar.gz
 
 cd ncurses-6.0
 CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --enable-widec --with-cxx-binding"
+if [[ $CROSS_COMPILE != "" ]] ; then
+  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
 make install.libs
@@ -48,6 +51,9 @@ tar xfv readline-7.0.tar.gz
 
 cd readline-7.0
 CONFARGS="--prefix=$PREFIX --disable-shared"
+if [[ $CROSS_COMPILE != "" ]] ; then
+  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
 make install-static
