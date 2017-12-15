@@ -20,15 +20,9 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ ! -f avrdude-6.3.tar.gz  ]] ;
-then
-	wget http://download.savannah.gnu.org/releases/avrdude/avrdude-6.3.tar.gz
-fi
-
-tar xfv avrdude-6.3.tar.gz
+git clone https://github.com/facchinm/avrdude.git avrdude-6.3
 
 cd avrdude-6.3
-for p in ../avrdude-6.3-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
 autoreconf --force --install
 ./bootstrap
 
