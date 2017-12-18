@@ -53,6 +53,7 @@ fi
 tar xfv readline-6.3.tar.gz
 
 cd readline-6.3
+autoconf
 CONFARGS="--prefix=$PREFIX --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
