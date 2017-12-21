@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-OUTPUT_VERSION=6.3.0-arduino10
+OUTPUT_VERSION=6.3.0-arduino11
 
 export OS=`uname -o || uname`
 export TARGET_OS=$OS
@@ -76,12 +76,13 @@ else
 
 fi
 
-rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 libelf-0.8.13 objdir ncurses-5.9 readline-6.3
+rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 libelf-0.8.13 objdir ncurses-5.9 readline-6.3 hidapi
 
 ./libusb-1.0.20.build.bash
 ./libusb-compat-0.1.5.build.bash
 ./libelf-0.8.13.build.bash
 ./libncurses-5.9.build.bash
+./libhidapi.build.bash
 ./avrdude-6.3.build.bash
 
 # if producing a windows build, compress as zip and

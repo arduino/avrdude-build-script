@@ -20,24 +20,19 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-git clone https://github.com/facchinm/avrdude.git avrdude-6.3
+git clone https://github.com/signal11/hidapi.git
 
-cd avrdude-6.3
-autoreconf --force --install
-./bootstrap
-
-COMMON_FLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -I$PREFIX/include/hidapi/ -L$PREFIX/lib"
-
-CFLAGS="$COMMON_FLAGS $CFLAGS"
-CXXFLAGS="$COMMON_FLAGS $CXXFLAGS"
-LDFLAGS="$COMMON_FLAGS $LDFLAGS"
-CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
+cd hidapi
+CONFARGS="--prefix=$PREFIX --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+  # solve bug with --host not being effective on second level directory
+  export CC=$CROSS_COMPILE_HOST-gcc
+  export AR=$CROSS_COMPILE_HOST-ar
+  export RANLIB=$CROSS_COMPILE_HOST-ranlib
 fi
+./bootstrap
 CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
-
-make
+make -j 1
 make install
 cd ..
-
