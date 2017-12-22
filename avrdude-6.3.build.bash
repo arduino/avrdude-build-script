@@ -24,7 +24,7 @@ git clone https://github.com/facchinm/avrdude.git avrdude-6.3 --depth 1
 
 cd avrdude-6.3
 
-#patch -p1 < ../avrdude-6.3-patches/90*
+patch -p1 < ../avrdude-6.3-patches/90*
 
 autoreconf --force --install
 ./bootstrap
