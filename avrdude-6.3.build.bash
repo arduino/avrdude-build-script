@@ -26,6 +26,9 @@ cd avrdude-6.3
 
 patch -p1 < ../avrdude-6.3-patches/90*
 
+export CFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
+export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
+
 autoreconf --force --install
 ./bootstrap
 if [[ $OS == "GNU/Linux" ]] ; then
@@ -38,8 +41,6 @@ COMMON_FLAGS=""
 #CFLAGS="$CFLAGS -lhid -lsetupapi"
 #fi
 
-CFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
-LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
