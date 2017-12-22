@@ -20,10 +20,30 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-git clone https://github.com/signal11/hidapi.git
+if [[ $CROSS_COMPILE != "" ]] ; then
+  CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
+fi
+
+if [[ $TARGET_OS == "GNU/Linux" ]] ; then
+
+git clone https://github.com/gentoo/eudev.git --depth 1
+cd eudev
+./autogen.sh
+./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX
+make clean
+make -j4
+make install
+cd ..
+rm -rf eudev
+
+fi
+
+git clone https://github.com/signal11/hidapi.git --depth 1
+
+CFLAGS="-I$PREFIX/include/ -L$PREFIX/lib/"
 
 cd hidapi
-CONFARGS="--prefix=$PREFIX --disable-shared"
+CONFARGS="--prefix=$PREFIX --enable-static --disable-shared "
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
   # solve bug with --host not being effective on second level directory

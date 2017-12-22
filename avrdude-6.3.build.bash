@@ -20,17 +20,26 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-git clone https://github.com/facchinm/avrdude.git avrdude-6.3
+git clone https://github.com/facchinm/avrdude.git avrdude-6.3 --depth 1
 
 cd avrdude-6.3
+
+patch -p1 < ../avrdude-6.3-patches/90*
+
 autoreconf --force --install
 ./bootstrap
+if [[ $OS == "GNU/Linux" ]] ; then
+libtoolize
+fi
 
-COMMON_FLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0/ -I$PREFIX/include/hidapi/ -L$PREFIX/lib"
+COMMON_FLAGS=""
 
-CFLAGS="$COMMON_FLAGS $CFLAGS"
-CXXFLAGS="$COMMON_FLAGS $CXXFLAGS"
-LDFLAGS="$COMMON_FLAGS $LDFLAGS"
+#if [[ $CROSS_COMPILE == "mingw" ]] ; then
+#CFLAGS="$CFLAGS -lhid -lsetupapi"
+#fi
+
+CFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
+LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
