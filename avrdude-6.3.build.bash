@@ -26,7 +26,7 @@ cd avrdude-6.3
 
 patch -p1 < ../avrdude-6.3-patches/90*
 
-export CFLAGS="-I$PREFIX/include -I$PREFIX/ncurses -I$PREFIX/ncursesw -I$PREFIX/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
+export CFLAGS="-I$PREFIX/include -I$PREFIX/include/hidapi -I$PREFIX/include/libelf -I$PREFIX/include/ncurses -I$PREFIX/include/ncursesw -I$PREFIX/include/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
 autoreconf --force --install

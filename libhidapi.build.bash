@@ -29,7 +29,7 @@ if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 git clone https://github.com/gentoo/eudev.git --depth 1
 cd eudev
 ./autogen.sh
-./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX
+./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
 make clean
 make -j4
 make install
