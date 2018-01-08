@@ -37,15 +37,16 @@ fi
 
 COMMON_FLAGS=""
 
-#if [[ $CROSS_COMPILE == "mingw" ]] ; then
-#CFLAGS="$CFLAGS -lhid -lsetupapi"
-#fi
+if [[ $CROSS_COMPILE == "mingw" ]] ; then
+CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS -lhidapi -lsetupapi"
+LIBS="-lhidapi -lsetupapi"
+fi
 
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi
-CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
+./configure $CONFARGS CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" LIBS="$LIBS"
 
 make
 make install
