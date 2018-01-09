@@ -50,9 +50,9 @@ CFLAGS="-I$PREFIX/include/ -L$PREFIX/lib/"
 cd hidapi
 CONFARGS="--prefix=$PREFIX --enable-static --disable-shared "
 
-PKG_CONFIG_DIR=
-PKG_CONFIG_LIBDIR=$PREFIX/lib/pkgconfig:$STAGING/share/pkgconfig
-PKG_CONFIG_SYSROOT_DIR=$PREFIX
+export PKG_CONFIG_DIR=
+export PKG_CONFIG_LIBDIR=$PREFIX/lib/pkgconfig:$STAGING/share/pkgconfig
+export PKG_CONFIG_SYSROOT_DIR=$PREFIX
 
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
