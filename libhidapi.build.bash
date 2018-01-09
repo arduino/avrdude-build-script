@@ -28,8 +28,13 @@ if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 
 git clone https://github.com/gentoo/eudev.git --depth 1
 cd eudev
-./autogen.sh
-./configure --enable-static --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
+#./autogen.sh
+libtoolize --force
+aclocal
+autoheader
+automake --force-missing --add-missing
+autoconf
+./configure --enable-static --disable-gudev --disable-introspection  --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
 make clean
 make -j4
 make install
@@ -44,6 +49,11 @@ CFLAGS="-I$PREFIX/include/ -L$PREFIX/lib/"
 
 cd hidapi
 CONFARGS="--prefix=$PREFIX --enable-static --disable-shared "
+
+PKG_CONFIG_DIR=
+PKG_CONFIG_LIBDIR=$PREFIX/lib/pkgconfig:$STAGING/share/pkgconfig
+PKG_CONFIG_SYSROOT_DIR=$PREFIX
+
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
   # solve bug with --host not being effective on second level directory

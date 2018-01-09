@@ -38,9 +38,15 @@ fi
 COMMON_FLAGS=""
 
 if [[ $CROSS_COMPILE == "mingw" ]] ; then
-CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS -lhidapi -lsetupapi"
+CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS"
 LIBS="-lhidapi -lsetupapi"
 fi
+
+if [[ $OS == "Darwin" ]] ; then
+CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS"
+LIBS="-lhidapi"
+fi
+
 
 CONFARGS="--prefix=$PREFIX --enable-linuxgpio"
 if [[ $CROSS_COMPILE != "" ]] ; then
