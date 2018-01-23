@@ -1,0 +1,272 @@
+Index: jtagmkII.c
+===================================================================
+--- jtagmkII.c	(revision 1334)
++++ jtagmkII.c	(working copy)
+@@ -1507,9 +1507,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_JTAGICEMKII;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -1559,9 +1559,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_JTAGICEMKII;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -1611,9 +1611,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_JTAGICEMKII;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -1664,9 +1664,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_AVRDRAGON;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -1717,9 +1717,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_AVRDRAGON;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -1770,9 +1770,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_AVRDRAGON;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -3347,9 +3347,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_JTAGICEMKII;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+Index: stk500v2.c
+===================================================================
+--- stk500v2.c	(revision 1334)
++++ stk500v2.c	(working copy)
+@@ -1597,9 +1597,9 @@
+     pinfo.usbinfo.pid = USB_DEVICE_AVRISPMKII;
+     PDATA(pgm)->pgmtype = PGMTYPE_AVRISP_MKII;
+     pgm->set_sck_period = stk500v2_set_sck_period_mk2;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -1655,7 +1655,7 @@
+     pinfo.usbinfo.pid = USB_DEVICE_STK600;
+     PDATA(pgm)->pgmtype = PGMTYPE_STK600;
+     pgm->set_sck_period = stk600_set_sck_period;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
++    pgm->fd.usb.max_xfer = 0;
+     pgm->fd.usb.rep = USBDEV_BULK_EP_READ_STK600;
+     pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_STK600;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+@@ -3361,9 +3361,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_JTAGICEMKII;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -3472,9 +3472,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_AVRDRAGON;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+@@ -3550,9 +3550,9 @@
+     pinfo.usbinfo.vid = USB_VENDOR_ATMEL;
+     pinfo.usbinfo.flags = 0;
+     pinfo.usbinfo.pid = USB_DEVICE_AVRDRAGON;
+-    pgm->fd.usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-    pgm->fd.usb.rep = USBDEV_BULK_EP_READ_MKII;
+-    pgm->fd.usb.wep = USBDEV_BULK_EP_WRITE_MKII;
++    pgm->fd.usb.max_xfer = 0;
++    pgm->fd.usb.rep = -1;
++    pgm->fd.usb.wep = -1;
+     pgm->fd.usb.eep = 0;           /* no seperate EP for events */
+ #else
+     avrdude_message(MSG_INFO, "avrdude was compiled without usb support.\n");
+Index: usb_libusb.c
+===================================================================
+--- usb_libusb.c	(revision 1334)
++++ usb_libusb.c	(working copy)
+@@ -104,9 +104,6 @@
+ 	}
+     }
+ 
+-  if (fd->usb.max_xfer == 0)
+-    fd->usb.max_xfer = USBDEV_MAX_XFER_MKII;
+-
+   usb_init();
+ 
+   usb_find_busses();
+@@ -239,43 +236,62 @@
+ 		    }
+ 
+ 		  fd->usb.handle = udev;
+-		  if (fd->usb.rep == 0)
++		  if (fd->usb.rep < 0)
+ 		    {
+ 		      /* Try finding out what our read endpoint is. */
+ 		      for (i = 0; i < dev->config[0].interface[iface].altsetting[0].bNumEndpoints; i++)
+ 			{
+-			  int possible_ep = dev->config[0].interface[iface].altsetting[0].
+-			  endpoint[i].bEndpointAddress;
++			  int possible_ep = dev->config[0].interface[iface].altsetting[0].endpoint[i].bEndpointAddress;
++			  int possible_ep_size = dev->config[0].interface[iface].altsetting[0].endpoint[i].wMaxPacketSize;
+ 
+ 			  if ((possible_ep & USB_ENDPOINT_DIR_MASK) != 0)
+ 			    {
+-                              avrdude_message(MSG_NOTICE2, "%s: usbdev_open(): using read endpoint 0x%02x\n",
++				  avrdude_message(MSG_NOTICE2, "%s: usbdev_open(): using read endpoint 0x%02x\n",
+                                                   progname, possible_ep);
+ 			      fd->usb.rep = possible_ep;
++				  //Take smaller endpoint size as max
++				  if ((fd->usb.max_xfer == 0) || (possible_ep_size < fd->usb.max_xfer))
++				  {
++				    fd->usb.max_xfer = possible_ep_size;
++				  }
+ 			      break;
+ 			    }
+ 			}
+-		      if (fd->usb.rep == 0)
++		      if (fd->usb.rep < 0)
+ 			{
+-			  avrdude_message(MSG_INFO, "%s: usbdev_open(): cannot find a read endpoint, using 0x%02x\n",
+-                                          progname, USBDEV_BULK_EP_READ_MKII);
+-			  fd->usb.rep = USBDEV_BULK_EP_READ_MKII;
++			  avrdude_message(MSG_INFO, "%s: usbdev_open(): ERROR: cannot find a read endpoint",
++                                          progname);
+ 			}
+ 		    }
+-		  for (i = 0; i < dev->config[0].interface[iface].altsetting[0].bNumEndpoints; i++)
++
++		  if (fd->usb.wep < 0)
+ 		    {
+-		      if ((dev->config[0].interface[iface].altsetting[0].endpoint[i].bEndpointAddress == fd->usb.rep ||
+-			   dev->config[0].interface[iface].altsetting[0].endpoint[i].bEndpointAddress == fd->usb.wep) &&
+-			  dev->config[0].interface[iface].altsetting[0].endpoint[i].wMaxPacketSize < fd->usb.max_xfer)
++		      /* Try finding out what our write endpoint is. */
++		      for (i = 0; i < dev->config[0].interface[iface].altsetting[0].bNumEndpoints; i++)
+ 			{
+-                          avrdude_message(MSG_NOTICE, "%s: max packet size expected %d, but found %d due to EP 0x%02x's wMaxPacketSize\n",
+-                                            progname,
+-                                            fd->usb.max_xfer,
+-                                            dev->config[0].interface[iface].altsetting[0].endpoint[i].wMaxPacketSize,
+-                                            dev->config[0].interface[iface].altsetting[0].endpoint[i].bEndpointAddress);
+-			  fd->usb.max_xfer = dev->config[0].interface[iface].altsetting[0].endpoint[i].wMaxPacketSize;
++			  int possible_ep = dev->config[0].interface[iface].altsetting[0].endpoint[i].bEndpointAddress;
++			  int possible_ep_size = dev->config[0].interface[iface].altsetting[0].endpoint[i].wMaxPacketSize;
++
++			  if ((possible_ep & USB_ENDPOINT_DIR_MASK) == 0)
++			    {
++				  avrdude_message(MSG_NOTICE2, "%s: usbdev_open(): using write endpoint 0x%02x\n",
++                                                  progname, possible_ep);
++			      fd->usb.wep = possible_ep;
++				  //Take smaller endpoint size as max
++				  if ((fd->usb.max_xfer == 0) || (possible_ep_size < fd->usb.max_xfer))
++				  {
++				    fd->usb.max_xfer = possible_ep_size;
++				  }
++			      break;
++			    }
+ 			}
++		      if (fd->usb.wep < 0)
++			{
++			  avrdude_message(MSG_INFO, "%s: usbdev_open(): ERROR: cannot find a write endpoint",
++                                          progname);
++			}
+ 		    }
++		 
+ 		  if (pinfo.usbinfo.flags & PINFO_FL_USEHID)
+ 		    {
+ 		      if (usb_control_msg(udev, 0x21, 0x0a /* SET_IDLE */, 0, 0, NULL, 0, 100) < 0)
+Index: usbdevs.h
+===================================================================
+--- usbdevs.h	(revision 1334)
++++ usbdevs.h	(working copy)
+@@ -55,12 +55,6 @@
+ #define USBTINY_PRODUCT_DEFAULT 0x0C9F
+ 
+ 
+-
+-/* JTAGICEmkII, AVRISPmkII */
+-#define USBDEV_BULK_EP_WRITE_MKII 0x02
+-#define USBDEV_BULK_EP_READ_MKII  0x82
+-#define USBDEV_MAX_XFER_MKII 64
+-
+ /* STK600 */
+ #define USBDEV_BULK_EP_WRITE_STK600 0x02
+ #define USBDEV_BULK_EP_READ_STK600 0x83
