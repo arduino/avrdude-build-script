@@ -26,7 +26,7 @@ fi
 
 if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 
-git clone https://github.com/gentoo/eudev.git --depth 1
+git clone https://github.com/gentoo/eudev.git --depth 1 -b v3.0
 cd eudev
 #./autogen.sh
 libtoolize --force

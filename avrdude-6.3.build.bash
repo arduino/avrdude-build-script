@@ -20,7 +20,7 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-git clone https://github.com/facchinm/avrdude.git avrdude-6.3 --depth 1
+git clone https://github.com/facchinm/avrdude.git avrdude-6.3 --depth 1 -b staging
 
 cd avrdude-6.3
 
