@@ -36,13 +36,13 @@ cd ncurses-5.9
 
 for p in ../ncurses-patches/*.patch; do echo Applying $p; patch -p1 < $p; done
 
-CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --enable-widec --with-cxx-binding"
+CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --with-termlib --enable-termcap"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CPPFLAGS="-P" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
-make install.libs
+make install.libs 
 cd ..
 
 if [[ ! -f readline-6.3.tar.gz  ]] ;

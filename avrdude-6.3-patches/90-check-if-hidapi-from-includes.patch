@@ -2,6 +2,15 @@ diff --git a/configure.ac b/configure.ac
 index d422bfc..ddd9b6f 100644
 --- a/configure.ac
 +++ b/configure.ac
+@@ -79,7 +79,7 @@ dnl Makefile.am:77: compiling `config_gram.c' with per-target flags requires `AM
+ AM_PROG_CC_C_O
+ 
+ # Checks for libraries.
+-AC_CHECK_LIB([termcap], [tputs])
++AC_CHECK_LIB([ncurses], [tputs])
+ AC_CHECK_LIB([ncurses], [tputs])
+ AC_CHECK_LIB([readline], [readline])
+ AH_TEMPLATE([HAVE_LIBELF],
 @@ -154,7 +154,9 @@ AC_SUBST(LIBUSB_1_0, $LIBUSB_1_0)
  
  AH_TEMPLATE([HAVE_LIBHIDAPI],
