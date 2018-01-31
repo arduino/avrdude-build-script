@@ -26,14 +26,9 @@ fi
 
 if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 
-git clone https://github.com/gentoo/eudev.git --depth 1 -b v3.0
+git clone https://github.com/gentoo/eudev.git --depth 1
 cd eudev
-#./autogen.sh
-libtoolize --force
-aclocal
-autoheader
-automake --force-missing --add-missing
-autoconf
+./autogen.sh
 ./configure --enable-static --disable-gudev --disable-introspection  --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
 make clean
 make -j4
@@ -45,14 +40,13 @@ fi
 
 git clone https://github.com/signal11/hidapi.git --depth 1
 
-CFLAGS="-I$PREFIX/include/ -L$PREFIX/lib/"
+export CFLAGS="-I$PREFIX/include -I$PREFIX/include/hidapi -I$PREFIX/include/libelf -I$PREFIX/include/ncurses -I$PREFIX/include/ncursesw -I$PREFIX/include/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
+export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
 cd hidapi
-CONFARGS="--prefix=$PREFIX --enable-static --disable-shared "
+CONFARGS="--prefix=$PREFIX --enable-static --disable-shared"
 
-export PKG_CONFIG_DIR=
-export PKG_CONFIG_LIBDIR=$PREFIX/lib/pkgconfig:$STAGING/share/pkgconfig
-export PKG_CONFIG_SYSROOT_DIR=$PREFIX
+export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
 
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
