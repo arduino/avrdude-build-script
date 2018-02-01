@@ -92,14 +92,14 @@ if [[ ${OUTPUT_TAG} == *"mingw"* ]] ; then
   cp libusb-win32-bin-1.2.6.0/bin/x86/libusb0_x86.dll objdir/bin/libusb0.dll
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip
   cp -a objdir avrdude
-  zip -r avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude
+  zip -r avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude/bin/ avrdude/etc/avrdude.conf
   rm -r avrdude
 
 else
 
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
   cp -a objdir avrdude
-  tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
+  tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude/bin/avrdude avrdude/etc/avrdude.conf
   rm -r avrdude
 
 fi
