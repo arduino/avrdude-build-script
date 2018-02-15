@@ -26,8 +26,9 @@ fi
 
 if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 
-git clone https://github.com/gentoo/eudev.git --depth 1
-cd eudev
+wget https://github.com/gentoo/eudev/archive/v3.2.5.tar.gz
+tar xvf v3.2.5.tar.gz
+cd eudev-3.2.5
 ./autogen.sh
 ./configure --enable-static --disable-gudev --disable-introspection  --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
 make clean
