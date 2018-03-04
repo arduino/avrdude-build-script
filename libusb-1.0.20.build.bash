@@ -22,7 +22,7 @@ cd -
 
 if [[ ! -f libusb-1.0.20.tar.bz2  ]] ;
 then
-	wget http://download.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.20/libusb-1.0.20.tar.bz2
+	wget https://github.com/libusb/libusb/releases/download/v1.0.20/libusb-1.0.20.tar.bz2
 fi
 
 tar xfv libusb-1.0.20.tar.bz2
