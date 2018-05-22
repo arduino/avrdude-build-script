@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-OUTPUT_VERSION=6.3.0-arduino13
+OUTPUT_VERSION=6.3.0-arduino14
 
 export OS=`uname -o || uname`
 export TARGET_OS=$OS
@@ -27,6 +27,13 @@ if [[ $CROSS_COMPILE == "mingw" ]] ; then
   export CROSS_COMPILE_HOST="i686-w64-mingw32"
   export TARGET_OS="Windows"
   OUTPUT_TAG=i686-w64-mingw32
+
+elif [[ $CROSS_COMPILE == "arm64-cross" ]] ; then
+  export CC="aarch64-linux-gnu-gcc"
+  export CXX="aarch64-linux-gnu-g++"
+  export CROSS_COMPILE_HOST="aarch64-linux-gnu"
+  export TARGET_OS="GNU/Linux"
+  OUTPUT_TAG=aarch64-linux-gnu
 
 elif [[ $CROSS_COMPILE == "arm-cross" ]] ; then
   export CC="arm-linux-gnueabihf-gcc"
