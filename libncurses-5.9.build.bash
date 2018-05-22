@@ -20,7 +20,7 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" ]] ; then
+if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32"  || $CROSS_COMPILE_HOST == "aarch64-linux-gnu" ]] ; then
 	#Avoid compiling ncurses in Windows platform
 	exit 0
 fi
@@ -40,6 +40,7 @@ CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --with
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi
+autoconf
 CFLAGS="-w -O2 $CFLAGS -fPIC" CPPFLAGS="-P" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
 make install.libs 
