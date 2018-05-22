@@ -28,6 +28,7 @@ fi
 tar xfv libelf-0.8.13.tar.gz
 
 cd libelf-0.8.13
+for p in ../libelf-0.8.13-patches/*.patch; do echo Applying $p; patch -p0 < $p; done
 CONFARGS="--prefix=$PREFIX --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
