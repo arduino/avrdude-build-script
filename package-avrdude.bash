@@ -93,6 +93,6 @@ else
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
   cp -a objdir avrdude
   tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude
-#  rm -r avrdude
+  rm -r avrdude
 
 fi
