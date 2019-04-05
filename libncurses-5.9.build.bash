@@ -40,7 +40,9 @@ CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --with
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi
+if [[ $MACHINE == "aarch64" ]] ; then
 autoconf
+fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CPPFLAGS="-P" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
 make install.libs 
