@@ -41,7 +41,7 @@ if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"
 fi
 if [[ $MACHINE == "aarch64" ]] ; then
-autoconf
+curl "http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD" > config.guess
 fi
 CFLAGS="-w -O2 $CFLAGS -fPIC" CPPFLAGS="-P" CXXFLAGS="-w -O2 $CXXFLAGS -fPIC" LDFLAGS="-s $LDFLAGS -fPIC" ./configure $CONFARGS
 make -j 4
