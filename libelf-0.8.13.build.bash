@@ -22,7 +22,7 @@ cd -
 
 if [[ ! -f libelf-0.8.13.tar.gz  ]] ;
 then
-	wget http://www.mr511.de/software/libelf-0.8.13.tar.gz
+	wget http://repository.timesys.com/buildsources/l/libelf/libelf-0.8.13/libelf-0.8.13.tar.gz
 fi
 
 tar xfv libelf-0.8.13.tar.gz
