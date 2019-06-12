@@ -76,7 +76,7 @@ elif [[ $OS == "Darwin" ]] ; then
   export PATH=/opt/local/libexec/gnubin/:/opt/local/bin:$PATH
   export CC="gcc -arch x86_64 -mmacosx-version-min=10.8"
   export CXX="g++ -arch x86_64 -mmacosx-version-min=10.8"
-  OUTPUT_TAG=i386-apple-darwin11
+  OUTPUT_TAG=x86_64-apple-darwin12
 
 else
 
