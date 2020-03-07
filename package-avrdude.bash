@@ -65,12 +65,19 @@ elif [[ $OS == "Msys" || $OS == "Cygwin" ]] ; then
   echo you may experience build failure or weird behaviour
   echo *************************************************************
 
-  export PATH=$PATH:/c/MinGW/bin/:/c/cygwin/bin/
-  export CC="mingw32-gcc -m32"
-  export CXX="mingw32-g++ -m32"
-  export TARGET_OS="Windows"
-  OUTPUT_TAG=i686-mingw32
-
+export MACHINE=`uname -m`
+  if [[ $MACHINE == "x86_64" ]] ; then
+    export CC="gcc"
+    export CXX="g++"
+    export TARGET_OS="Windows"
+    OUTPUT_TAG=x86_64-mingw64
+  else
+    export PATH=$PATH:/c/MinGW/bin/:/c/cygwin/bin/
+    export CC="mingw32-gcc -m32"
+    export CXX="mingw32-g++ -m32"
+    export TARGET_OS="Windows"
+    OUTPUT_TAG=i686-mingw32
+  fi
 elif [[ $OS == "Darwin" ]] ; then
 
   export PATH=/opt/local/libexec/gnubin/:/opt/local/bin:$PATH
@@ -92,13 +99,14 @@ rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 li
 ./libelf-0.8.13.build.bash
 ./libncurses-5.9.build.bash
 ./libhidapi.build.bash
+./libftdi-1.4.build.bash
 ./avrdude-6.3.build.bash
 
 # if producing a windows build, compress as zip and
 # copy *toolchain-precompiled* content to any folder containing a .exe
 if [[ ${OUTPUT_TAG} == *"mingw"* ]] ; then
 
-  cp libusb-win32-bin-1.2.6.0/bin/x86/libusb0_x86.dll objdir/bin/libusb0.dll
+  #cp libusb-win32-bin-1.2.6.0/bin/x86/libusb0_x86.dll objdir/bin/libusb0.dll
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip
   cp -a objdir avrdude
   zip -r avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude/bin/ avrdude/etc/avrdude.conf

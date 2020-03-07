@@ -1,0 +1,180 @@
+diff -Naur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2020-03-07 12:26:19.922659700 +0800
++++ b/CMakeLists.txt	2020-03-07 15:11:57.839140900 +0800
+@@ -46,6 +46,7 @@
+ set(CPACK_COMPONENT_STATICLIBS_GROUP "Development")
+ set(CPACK_COMPONENT_HEADERS_GROUP    "Development")
+ 
++option ( SHAREDLIBS "Build ㄎ libraries" ON )
+ option ( STATICLIBS "Build static libraries" ON )
+ 
+ # guess LIB_SUFFIX, don't take debian multiarch into account 
+diff -Naur a/examples/CMakeLists.txt b/examples/CMakeLists.txt
+--- a/examples/CMakeLists.txt	2020-03-07 12:26:20.208196700 +0800
++++ b/examples/CMakeLists.txt	2020-03-07 15:18:03.493009700 +0800
+@@ -8,29 +8,31 @@
+ 
+     message(STATUS "Building example programs.")
+ 
+-    # Targets
+-    add_executable(simple simple.c)
+-    add_executable(bitbang bitbang.c)
+-    add_executable(bitbang2 bitbang2.c)
+-    add_executable(bitbang_cbus bitbang_cbus.c)
+-    add_executable(bitbang_ft2232 bitbang_ft2232.c)
+-    add_executable(find_all find_all.c)
+-    add_executable(serial_test serial_test.c)
+-    add_executable(baud_test baud_test.c)
+-    add_executable(stream_test stream_test.c)
+-    add_executable(eeprom eeprom.c)
+-
+-    # Linkage
+-    target_link_libraries(simple ftdi1)
+-    target_link_libraries(bitbang ftdi1)
+-    target_link_libraries(bitbang2 ftdi1)
+-    target_link_libraries(bitbang_cbus ftdi1)
+-    target_link_libraries(bitbang_ft2232 ftdi1)
+-    target_link_libraries(find_all ftdi1)
+-    target_link_libraries(serial_test ftdi1)
+-    target_link_libraries(baud_test ftdi1)
+-    target_link_libraries(stream_test ftdi1)
+-    target_link_libraries(eeprom ftdi1)
++    if ( SHAREDLIBS )
++        # Targets
++        add_executable(simple simple.c)
++        add_executable(bitbang bitbang.c)
++        add_executable(bitbang2 bitbang2.c)
++        add_executable(bitbang_cbus bitbang_cbus.c)
++        add_executable(bitbang_ft2232 bitbang_ft2232.c)
++        add_executable(find_all find_all.c)
++        add_executable(serial_test serial_test.c)
++        add_executable(baud_test baud_test.c)
++        add_executable(stream_test stream_test.c)
++        add_executable(eeprom eeprom.c)
++
++        # Linkage
++        target_link_libraries(simple ftdi1)
++        target_link_libraries(bitbang ftdi1)
++        target_link_libraries(bitbang2 ftdi1)
++        target_link_libraries(bitbang_cbus ftdi1)
++        target_link_libraries(bitbang_ft2232 ftdi1)
++        target_link_libraries(find_all ftdi1)
++        target_link_libraries(serial_test ftdi1)
++        target_link_libraries(baud_test ftdi1)
++        target_link_libraries(stream_test ftdi1)
++        target_link_libraries(eeprom ftdi1)
++    endif()
+ 
+     # libftdi++ examples
+     if(FTDI_BUILD_CPP)
+@@ -39,11 +41,13 @@
+             include_directories(BEFORE ${CMAKE_SOURCE_DIR}/ftdipp
+                                 ${Boost_INCLUDE_DIRS})
+ 
+-            # Target
+-            add_executable(find_all_pp find_all_pp.cpp)
+-
+-            # Linkage
+-            target_link_libraries(find_all_pp ftdipp1)
++            if ( SHAREDLIBS )
++                # Target
++                add_executable(find_all_pp find_all_pp.cpp)
++
++                # Linkage
++                target_link_libraries(find_all_pp ftdipp1)
++            endif()
+         endif(Boost_FOUND)
+     endif(FTDI_BUILD_CPP)
+ 
+diff -Naur a/ftdipp/CMakeLists.txt b/ftdipp/CMakeLists.txt
+--- a/ftdipp/CMakeLists.txt	2020-03-07 12:26:20.229190200 +0800
++++ b/ftdipp/CMakeLists.txt	2020-03-07 15:13:30.150838600 +0800
+@@ -22,25 +22,26 @@
+ 
+     set(FTDI_BUILD_CPP True PARENT_SCOPE)
+     message(STATUS "Building libftdi1++")
+-
+-    # Shared library
+-    add_library(ftdipp1 SHARED ${cpp_sources})
+-
+-    math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatiblity with previous releases
+-    set_target_properties(ftdipp1 PROPERTIES VERSION ${VERSION_FIXUP}.${MINOR_VERSION}.0 SOVERSION 3)
+-
+-    # Prevent clobbering each other during the build
+-    set_target_properties(ftdipp1 PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+-
+-    # Dependencies
+-    target_link_libraries(ftdipp1 ftdi1 ${LIBUSB_LIBRARIES} ${BOOST_LIBRARIES})
+-
+-    
+-    install ( TARGETS ftdipp1
+-              RUNTIME DESTINATION bin
+-              LIBRARY DESTINATION lib${LIB_SUFFIX}
+-              ARCHIVE DESTINATION lib${LIB_SUFFIX}
+-            )
++    if ( SHAREDLIBS )
++      # Shared library
++      add_library(ftdipp1 SHARED ${cpp_sources})
++
++      math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatiblity with previous releases
++      set_target_properties(ftdipp1 PROPERTIES VERSION ${VERSION_FIXUP}.${MINOR_VERSION}.0 SOVERSION 3)
++
++      # Prevent clobbering each other during the build
++      set_target_properties(ftdipp1 PROPERTIES CLEAN_DIRECT_OUTPUT 1)
++
++      # Dependencies
++      target_link_libraries(ftdipp1 ftdi1 ${LIBUSB_LIBRARIES} ${BOOST_LIBRARIES})
++
++      
++      install ( TARGETS ftdipp1
++                RUNTIME DESTINATION bin
++                LIBRARY DESTINATION lib${LIB_SUFFIX}
++                ARCHIVE DESTINATION lib${LIB_SUFFIX}
++              )
++    endif ()
+             
+     # Static library
+     if ( STATICLIBS )
+diff -Naur a/src/CMakeLists.txt b/src/CMakeLists.txt
+--- a/src/CMakeLists.txt	2020-03-07 12:26:20.257181000 +0800
++++ b/src/CMakeLists.txt	2020-03-07 15:13:02.108714300 +0800
+@@ -21,22 +21,24 @@
+ set(c_sources     ${CMAKE_CURRENT_SOURCE_DIR}/ftdi.c ${CMAKE_CURRENT_SOURCE_DIR}/ftdi_stream.c CACHE INTERNAL "List of c sources" )
+ set(c_headers     ${CMAKE_CURRENT_SOURCE_DIR}/ftdi.h CACHE INTERNAL "List of c headers" )
+ 
+-add_library(ftdi1 SHARED ${c_sources})
++if ( SHAREDLIBS )
++  add_library(ftdi1 SHARED ${c_sources})
+ 
+-math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatiblity with previous releases
+-set_target_properties(ftdi1 PROPERTIES VERSION ${VERSION_FIXUP}.${MINOR_VERSION}.0 SOVERSION 2)
+-# Prevent clobbering each other during the build
+-set_target_properties ( ftdi1 PROPERTIES CLEAN_DIRECT_OUTPUT 1 )
+-
+-
+-# Dependencies
+-target_link_libraries(ftdi1 ${LIBUSB_LIBRARIES})
+-
+-install ( TARGETS ftdi1
+-          RUNTIME DESTINATION bin
+-          LIBRARY DESTINATION lib${LIB_SUFFIX}
+-          ARCHIVE DESTINATION lib${LIB_SUFFIX}
+-        )
++  math(EXPR VERSION_FIXUP "${MAJOR_VERSION} + 1")    # Compatiblity with previous releases
++  set_target_properties(ftdi1 PROPERTIES VERSION ${VERSION_FIXUP}.${MINOR_VERSION}.0 SOVERSION 2)
++  # Prevent clobbering each other during the build
++  set_target_properties ( ftdi1 PROPERTIES CLEAN_DIRECT_OUTPUT 1 )
++
++
++  # Dependencies
++  target_link_libraries(ftdi1 ${LIBUSB_LIBRARIES})
++
++  install ( TARGETS ftdi1
++            RUNTIME DESTINATION bin
++            LIBRARY DESTINATION lib${LIB_SUFFIX}
++            ARCHIVE DESTINATION lib${LIB_SUFFIX}
++          )
++endif ()
+ 
+ if ( STATICLIBS )
+   add_library(ftdi1-static STATIC ${c_sources})
