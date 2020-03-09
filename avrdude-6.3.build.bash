@@ -20,6 +20,7 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
+rm -rf avrdude-6.3
 git clone https://github.com/facchinm/avrdude.git avrdude-6.3 --depth 1
 
 cd avrdude-6.3
@@ -42,6 +43,11 @@ COMMON_FLAGS=""
 if [[ $CROSS_COMPILE == "mingw" ]] ; then
 CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS"
 LIBS="-lhidapi -lsetupapi"
+fi
+
+if [[ $OS == "Msys" ]] ; then
+  CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS"
+  LIBS="-lhidapi -lsetupapi -Wl,-Bstatic -lwinpthread"
 fi
 
 if [[ $OS == "Darwin" ]] ; then
