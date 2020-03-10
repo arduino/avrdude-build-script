@@ -42,7 +42,7 @@ COMMON_FLAGS=""
 
 if [[ $CROSS_COMPILE == "mingw" ]] ; then
 CFLAGS="-DHAVE_LIBHIDAPI $CFLAGS"
-LIBS="-lhidapi -lsetupapi"
+LIBS="-lhidapi -lsetupapi -Wl,-Bstatic -lwinpthread"
 fi
 
 if [[ $OS == "Msys" ]] ; then
