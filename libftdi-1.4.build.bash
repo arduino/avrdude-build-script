@@ -31,15 +31,13 @@ rm -rf libftdi1-1.4/build
 mkdir libftdi1-1.4/build
 
 cd libftdi1-1.4/
-if [[ $OS == "Msys" ]] ; then
-  patch -p1 < ../libftdi1-1.4-patches/01-add_sharedlibs_flag.patch
-fi
+patch -p1 < ../libftdi1-1.4-patches/01-add_sharedlibs_flag.patch
 cd build/
 
-CMAKE_EXTRA_FLAG=""
+CMAKE_EXTRA_FLAG="-DSHAREDLIBS=OFF -DBUILD_TESTS=OFF"
 
-if [[ $OS == "Msys" ]] ; then
-  CMAKE_EXTRA_FLAG="$CMAKE_EXTRA_FLAG -DBUILD_TESTS=OFF -DSHAREDLIBS=OFF"
+if [[ $OS == "GNU/Linux"  ]] ; then
+  CMAKE_EXTRA_FLAG="$CMAKE_EXTRA_FLAG -DCMAKE_TOOLCHAIN_FILE=./cmake/Toolchain-i686-w64-mingw32.cmake"
 fi
 
 cmake $CMAKE_EXTRA_FLAG -DCMAKE_INSTALL_PREFIX="$PREFIX" -DLIBUSB_INCLUDE_DIR="$PREFIX/include/libusb-1.0" -DLIBFTDI_LIBRARY_DIRS="$PREFIX/lib" -DLIBUSB_LIBRARIES="usb-1.0" ../
