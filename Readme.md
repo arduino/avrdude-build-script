@@ -47,7 +47,7 @@ sudo apt-get install gcc-mingw-w64-i686
 When building you must set the env var `CROSS_COMPILE` to `mingw` for example:
 
 ```
-CROSS_COMPILE=mingw ./package_avrdude.bash
+CROSS_COMPILE=mingw ./package-avrdude.bash
 ```
 
 cross compile with mingw has been tested on Ubuntu 14.04 (mingw-w64 4.8), different versions of mingw may behave differently and fail to build.
