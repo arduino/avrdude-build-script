@@ -36,8 +36,12 @@ cd build/
 
 CMAKE_EXTRA_FLAG="-DSHAREDLIBS=OFF -DBUILD_TESTS=OFF"
 
-if [[ $OS == "GNU/Linux"  ]] ; then
+if [[ $OS == "GNU/Linux" && $CROSS_COMPILE == "mingw" ]] ; then
   CMAKE_EXTRA_FLAG="$CMAKE_EXTRA_FLAG -DCMAKE_TOOLCHAIN_FILE=./cmake/Toolchain-i686-w64-mingw32.cmake"
+fi
+
+if [[ $OS == "GNU/Linux" && $CROSS_COMPILE == "mingw64" ]] ; then
+  CMAKE_EXTRA_FLAG="$CMAKE_EXTRA_FLAG -DCMAKE_TOOLCHAIN_FILE=./cmake/Toolchain-x86_64-w64-mingw32.cmake"
 fi
 
 cmake $CMAKE_EXTRA_FLAG -DCMAKE_INSTALL_PREFIX="$PREFIX" -DLIBUSB_INCLUDE_DIR="$PREFIX/include/libusb-1.0" -DLIBFTDI_LIBRARY_DIRS="$PREFIX/lib" -DLIBUSB_LIBRARIES="usb-1.0" ../
