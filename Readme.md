@@ -18,6 +18,22 @@ Just run:
 Setup has been done on partially set up development machines.
 If you find any package missing from the following list, please open an issue at once!
 
+### Docker Building
+
+Run:
+```
+mkdir dist
+docker build . -t avrdude-builder
+# cross compile i686
+docker run --rm -it -v $PWD/dist:/avrdude-build-script/dist -e CROSS_COMPILE=mingw avrdude-builder
+# cross compile x86_64
+docker run --rm -it -v $PWD/dist:/avrdude-build-script/dist -e CROSS_COMPILE=mingw64 avrdude-builder
+# remove container
+docker rmi avrdude-builder
+```
+
+If you do not need cross compile, just remove `-e CROSS_COMPILE=mingw`.
+
 #### Debian requirements
 
 ```bash

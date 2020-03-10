@@ -27,6 +27,13 @@ if [[ $CROSS_COMPILE == "mingw" ]] ; then
   export CROSS_COMPILE_HOST="i686-w64-mingw32"
   export TARGET_OS="Windows"
   OUTPUT_TAG=i686-w64-mingw32
+elif [[ $CROSS_COMPILE == "mingw64" ]] ; then
+
+  export CC="x86_64-w64-mingw32-gcc"
+  export CXX="x86_64-w64-mingw32-g++"
+  export CROSS_COMPILE_HOST="x86_64-w64-mingw32"
+  export TARGET_OS="Windows"
+  OUTPUT_TAG=x86_64-w64-mingw32
 
 elif [[ $CROSS_COMPILE == "arm64-cross" ]] ; then
   export CC="aarch64-linux-gnu-gcc"
@@ -109,14 +116,16 @@ if [[ ${OUTPUT_TAG} == *"mingw"* ]] ; then
   #cp libusb-win32-bin-1.2.6.0/bin/x86/libusb0_x86.dll objdir/bin/libusb0.dll
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip
   cp -a objdir avrdude
-  zip -r avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude/bin/ avrdude/etc/avrdude.conf
+  mkdir -p dist/
+  zip -r dist/avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.zip avrdude/bin/ avrdude/etc/avrdude.conf
   rm -r avrdude
 
 else
 
   rm -f avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2
   cp -a objdir avrdude
-  tar -cjvf avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude/bin/avrdude avrdude/etc/avrdude.conf
+  mkdir -p dist/
+  tar -cjvf dist/avrdude-${OUTPUT_VERSION}-${OUTPUT_TAG}.tar.bz2 avrdude/bin/avrdude avrdude/etc/avrdude.conf
   rm -r avrdude
 
 fi

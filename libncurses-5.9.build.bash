@@ -20,7 +20,7 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32"  || $CROSS_COMPILE_HOST == "aarch64-linux-gnu" ]] ; then
+if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" || $CROSS_COMPILE_HOST == "x86_64-w64-mingw32" || $CROSS_COMPILE_HOST == "aarch64-linux-gnu" ]] ; then
 	#Avoid compiling ncurses in Windows platform
 	exit 0
 fi

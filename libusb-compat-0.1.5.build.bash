@@ -41,7 +41,7 @@ fi
 tar xfv libusb-compat-0.1.5.tar.bz2
 
 cd libusb-compat-0.1.5
-if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" ]] ; then
+if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw32" || $CROSS_COMPILE_HOST == "x86_64-w64-mingw32" ]] ; then
   patch -p1 < ../libusb-compat-0.1.5-patches/01-mingw-build.patch
   autoreconf --force --install
 fi
