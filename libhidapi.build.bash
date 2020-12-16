@@ -29,6 +29,7 @@ if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 wget https://github.com/gentoo/eudev/archive/v3.1.3.tar.gz
 tar xvf v3.1.3.tar.gz
 cd eudev-3.1.3
+sed -i 's|foreign 1.13|foreign 1.11|g' configure.ac
 ./autogen.sh
 ./configure --enable-static --disable-gudev --disable-introspection  --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
 make clean
