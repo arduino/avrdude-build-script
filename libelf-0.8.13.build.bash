@@ -22,7 +22,7 @@ cd -
 
 if [[ ! -f libelf-0.8.13.tar.gz  ]] ;
 then
-	wget https://fossies.org/linux/misc/old/libelf-0.8.13.tar.gz
+	wget --no-check-certificate https://fossies.org/linux/misc/old/libelf-0.8.13.tar.gz
 fi
 
 tar xfv libelf-0.8.13.tar.gz
