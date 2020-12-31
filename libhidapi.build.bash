@@ -26,10 +26,11 @@ fi
 
 if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 
-wget https://github.com/gentoo/eudev/archive/v3.1.3.tar.gz
-tar xvf v3.1.3.tar.gz
-cd eudev-3.1.3
+wget https://github.com/gentoo/eudev/archive/v3.2.9.tar.gz
+tar xvf v3.2.9.tar.gz
+cd eudev-3.2.9
 sed -i 's|foreign 1.13|foreign 1.11|g' configure.ac
+./autogen.sh
 ./autogen.sh
 ./configure --enable-static --disable-gudev --disable-introspection  --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
 make clean
@@ -57,7 +58,10 @@ if [[ $CROSS_COMPILE != "" ]] ; then
   export AR=$CROSS_COMPILE_HOST-ar
   export RANLIB=$CROSS_COMPILE_HOST-ranlib
 fi
+set +e
 ./bootstrap
+./bootstrap
+set -e
 CFLAGS="-w -O2 $CFLAGS" CXXFLAGS="-w -O2 $CXXFLAGS" LDFLAGS="-s $LDFLAGS" ./configure $CONFARGS
 make -j 1
 make install

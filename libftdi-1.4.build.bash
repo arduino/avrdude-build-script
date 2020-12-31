@@ -34,7 +34,7 @@ cd libftdi1-1.4/
 patch -p1 < ../libftdi1-1.4-patches/01-add_sharedlibs_flag.patch
 cd build/
 
-CMAKE_EXTRA_FLAG="-DSHAREDLIBS=OFF -DBUILD_TESTS=OFF"
+CMAKE_EXTRA_FLAG="-DSHAREDLIBS=OFF -DBUILD_TESTS=OFF -DPYTHON_BINDINGS=OFF -DEXAMPLES=OFF -DFTDI_EEPROM=OFF"
 
 if [[ $OS == "GNU/Linux" && $CROSS_COMPILE == "mingw" ]] ; then
   CMAKE_EXTRA_FLAG="$CMAKE_EXTRA_FLAG -DCMAKE_TOOLCHAIN_FILE=./cmake/Toolchain-i686-w64-mingw32.cmake"

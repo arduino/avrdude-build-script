@@ -29,7 +29,10 @@ export CFLAGS="-I$PREFIX/include -I$PREFIX/include/hidapi -I$PREFIX/include/libe
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
 
+set +e
 autoreconf --force --install
+autoreconf --force --install
+set -e
 ./bootstrap
 if [[ $OS == "GNU/Linux" ]] ; then
 libtoolize
