@@ -21,12 +21,9 @@ PREFIX=`pwd`
 cd -
 
 rm -rf avrdude-6.3
-git clone https://github.com/facchinm/avrdude.git avrdude-6.3 --depth 1
+git clone https://github.com/facchinm/avrdude.git avrdude-6.3 -b mainline --depth 1
 
 cd avrdude-6.3
-
-patch -p1 < ../avrdude-6.3-patches/90*
-patch -p1 < ../avrdude-6.3-patches/01-fix_ftdi_read_data_segfault_bugs.patch
 
 export CFLAGS="-I$PREFIX/include -I$PREFIX/include/hidapi -I$PREFIX/include/libelf -I$PREFIX/include/ncurses -I$PREFIX/include/ncursesw -I$PREFIX/include/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
