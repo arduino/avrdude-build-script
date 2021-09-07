@@ -85,12 +85,12 @@ else
 
 fi
 
-rm -rf avrdude-6.3 libusb-1.0.20 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 libelf-0.8.13 objdir ncurses-5.9 readline-6.3 hidapi
+rm -rf avrdude-6.3 libusb-1.0.24 libusb-compat-0.1.5 libusb-win32-bin-1.2.6.0 libelf-0.8.13 objdir ncurses-6.2 readline-6.3 hidapi
 
-./libusb-1.0.20.build.bash
+./libusb-1.0.24.build.bash
 ./libusb-compat-0.1.5.build.bash
 ./libelf-0.8.13.build.bash
-./libncurses-5.9.build.bash
+./libncurses-6.2.build.bash
 ./libhidapi.build.bash
 ./avrdude-6.3.build.bash
 
