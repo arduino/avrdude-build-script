@@ -20,14 +20,14 @@ cd objdir
 PREFIX=`pwd`
 cd -
 
-if [[ ! -f libusb-1.0.20.tar.bz2  ]] ;
+if [[ ! -f libusb-1.0.24.tar.bz2  ]] ;
 then
-	wget https://github.com/libusb/libusb/releases/download/v1.0.20/libusb-1.0.20.tar.bz2
+    wget https://github.com/libusb/libusb/releases/download/v1.0.24/libusb-1.0.24.tar.bz2
 fi
 
-tar xfv libusb-1.0.20.tar.bz2
+tar xfv libusb-1.0.24.tar.bz2
 
-cd libusb-1.0.20
+cd libusb-1.0.24
 CONFARGS="--prefix=$PREFIX --disable-udev --enable-static --disable-shared"
 if [[ $CROSS_COMPILE != "" ]] ; then
   CONFARGS="$CONFARGS --host=$CROSS_COMPILE_HOST"

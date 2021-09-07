@@ -26,9 +26,9 @@ fi
 
 if [[ $TARGET_OS == "GNU/Linux" ]] ; then
 
-wget https://github.com/gentoo/eudev/archive/v3.1.3.tar.gz
-tar xvf v3.1.3.tar.gz
-cd eudev-3.1.3
+wget https://github.com/gentoo/eudev/archive/v3.2.9.tar.gz
+tar xvf v3.2.9.tar.gz
+cd eudev-3.2.9
 sed -i 's|foreign 1.13|foreign 1.11|g' configure.ac
 ./autogen.sh
 ./configure --enable-static --disable-gudev --disable-introspection  --disable-shared --disable-blkid --disable-kmod  --disable-manpages --prefix=$PREFIX $CONFARGS
@@ -40,12 +40,13 @@ rm -rf eudev
 
 fi
 
-git clone https://github.com/signal11/hidapi.git --depth 1
+git clone https://github.com/signal11/hidapi.git --branch autotools --depth 1
 
 export CFLAGS="-I$PREFIX/include -I$PREFIX/include/hidapi -I$PREFIX/include/libelf -I$PREFIX/include/ncurses -I$PREFIX/include/ncursesw -I$PREFIX/include/readline -I$PREFIX/include/libusb-1.0 $CFLAGS"
 export LDFLAGS="-L$PREFIX/lib $LDFLAGS"
 
 cd hidapi
+sed -i '/AC_CONFIG_MACRO_DIR/ s/^#*/#/' configure.ac # Fix build error
 CONFARGS="--prefix=$PREFIX --enable-static --disable-shared"
 
 export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig

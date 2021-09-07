@@ -25,16 +25,16 @@ if [[ $OS == "Msys" || $OS == "Cygwin" || $CROSS_COMPILE_HOST == "i686-w64-mingw
 	exit 0
 fi
 
-if [[ ! -f ncurses-5.9.tar.gz  ]] ;
+if [[ ! -f ncurses-6.2.tar.gz  ]] ;
 then
-	wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-5.9.tar.gz
+    wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.2.tar.gz
 fi
 
-tar xfv ncurses-5.9.tar.gz
+tar xfv ncurses-6.2.tar.gz
 
-cd ncurses-5.9
+cd ncurses-6.2
 
-for p in ../ncurses-patches/*.patch; do echo Applying $p; patch -p1 < $p; done
+#for p in ../ncurses-patches/*.patch; do echo Applying $p; patch -p1 < $p; done # patches not necessary anymore
 
 CONFARGS="--prefix=$PREFIX --disable-shared --without-debug --without-ada --with-termlib --enable-termcap"
 if [[ $CROSS_COMPILE != "" ]] ; then
